@@ -1,0 +1,16 @@
+div#maincontainer{
+    margin: auto;
+    width: 600px;
+    padding-top: 50px;
+}
+div#maincontainer input{
+    float: left
+}
+
+#todo-list li .edit {
+display: none;
+}
+
+#todo-list li.editing .edit {
+    display : block;
+}

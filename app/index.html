@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!doctype html>
+<html lang="en" ng-app="DevCampApp">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ng-DevCampApp</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/app.css">
+        <script src="http://code.angularjs.org/1.2.0-rc.3/angular.min.js">
+        </script>
+        <script src="scripts/controllers.js">
+        </script>
+    </head>
+    <body ng-controller="DevCampCtrl">
+        <div id="maincontainer">
+            <form class="form-inline"
+                  role="form"
+                  ng-submit="addTodo()"
+                  >
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="allChecked" ng-change="toggleTodoChecked()">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="text"
+                           ng-model="userInput"
+                           class="form-control"
+                           id="exampleInputEmail2"
+                           placeholder="Enter your todo here">
+                </div>
+            </form>
+            <ul id="todo-list">
+                <li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
+							<label ng-dblclick="editTodo(todo)">{{todo.message}}</label>
+							<button type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-trash" ng-click="removeTodo(todo)"></span>
+                            </button>
+						</div>
+						<form ng-submit="doneEditing(todo)">
+							<input class="edit"
+                                    ng-trim="false" ng-model="todo.message" ng-blur="doneEditing(todo)"
+                                    todo-escape="revertEditing(todo)" todo-focus="todo == editedTodo">
+						</form>
+					</li>
+            </ul>
+            <footer id="footer" ng-show="todos.length">
+					<span id="todo-count"><strong ng-bind="todos.length"></strong>
+						<ng-pluralize count="todos.length" when="{ 'one': 'item left', other: 'items left' }">items left</ng-pluralize>
+					</span>
+					<ul id="filters">
+						<li>
+							<a ng-class="{selected: status == ''} " href="#/" class="selected">All</a>
+						</li>
+						<li>
+							<a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+						</li>
+						<li>
+							<a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+						</li>
+					</ul>
+					<button id="clear-completed" ng-click="clearCompleted()"
+                    ng-show="completedCount"
+                    class="ng-binding">Clear completed ({{completedCount}})</button>
+				</footer>
+        </div>
+    </body>
+</html>
