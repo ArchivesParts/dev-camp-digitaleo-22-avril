@@ -23,7 +23,7 @@ devCampApp.controller('DevCampCtrl', function ($scope, $filter, $location, devCa
 		}[path];
 	});
 
-	$scope.$watch('remainingCount == 0', function (val) {
+	$scope.$watch('completedCount == 0', function (val) {
 		$scope.allChecked = val;
 	});
 	/**
@@ -39,7 +39,7 @@ devCampApp.controller('DevCampCtrl', function ($scope, $filter, $location, devCa
 
 		$scope.todos.push({
 			'completed': true,
-			'message': $scope.userInput
+			'message': newTodo
 		});
 		devCampStorage.put(todos);
 		$scope.userInput = '';
@@ -96,7 +96,7 @@ devCampApp.controller('DevCampCtrl', function ($scope, $filter, $location, devCa
 	$scope.toggleTodoChecked = function () {
 
 		todos.forEach(function (todo) {
-			todo.completed = $scope.allTodoChecked;
+			todo.completed = $scope.allChecked;
 		});
 
 
